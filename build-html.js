@@ -10,16 +10,16 @@ function randBetween(min, max) {
 
 function createLevel(numElements = 40) {
   let curOffset = 0;
-  let curDomStr = '';
+  let curDomStr = '\n';
   for (let i=0; i < numElements; i++) {
     const colNum = randBetween(1,4);
     curOffset += randBetween(1,5) * 50;
-    curDomStr += `<input type="checkbox" name="box${i}" class="hitbox col${colNum}" style="top: -${curOffset}px"></input>`;
+    curDomStr += `<input type="checkbox" class="hitbox col${colNum}" style="top: -${curOffset}px"></input>\n`;
   }
   return curDomStr;
 }
 
-const level = createLevel(40);
+const level = createLevel(400);
 
 const htmlTemplate = `
   <!DOCTYPE html>

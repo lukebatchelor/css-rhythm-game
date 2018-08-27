@@ -59,16 +59,21 @@ body, html {
   .hitbox {
     -moz-appearance: none;
     -webkit-appearance: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    user-select: none;
+    outline: none;
     height: @hitbox-size;
     width: @hitbox-size;
     position: absolute;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>');
+    /* Icon from: https://material.io/tools/icons/?search=note&icon=music_note&style=baseline */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" focusable="false" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>');
     background-size: contain;
 
     &:checked {
-      background-color: purple;
       counter-increment: score;
       pointer-events: none;
+      animation: hitAnim 0.3s;
     }
   }
 }
@@ -106,11 +111,12 @@ body, html {
   pointer-events: none;
 }
 
-.level {
-  // transform: translateY(200px)
-}
-
 @keyframes playing {
   0%   { transform: translateY(-100px); }
   100% { transform: translateY(9000px); }
+}
+
+@keyframes hitAnim {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-100px) scale(2); opacity: 0.3; }
 }
