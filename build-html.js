@@ -8,7 +8,7 @@ function randBetween(min, max) {
   return Math.floor(Math.random() * (max - min +1)) + min;
 }
 
-function createLevel(numElements = 10) {
+function createLevel(numElements = 40) {
   let curOffset = 0;
   let curDomStr = '';
   for (let i=0; i < numElements; i++) {
@@ -19,7 +19,7 @@ function createLevel(numElements = 10) {
   return curDomStr;
 }
 
-const level = createLevel(10);
+const level = createLevel(40);
 
 const htmlTemplate = `
   <!DOCTYPE html>
