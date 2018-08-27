@@ -1,0 +1,116 @@
+@hitbox-size: 50px;
+@game-height: 400px;
+
+body, html {
+  height: 100%;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.startScreen, .gameOverScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.startScreen, .playingScreen, .gameOverScreen {
+  display: none;
+}
+
+#start:checked ~ #game .startScreen,
+#gameOver:checked ~ #game .gameOverScreen {
+  display: flex;
+}
+#playing:checked ~ #game .playingScreen
+{
+  display: block;
+
+  .level {
+    animation: playing 35s linear;
+  }
+}
+
+#game {
+  border: 1px solid black;
+  min-height: 400px;
+  min-width: 300px;
+  background-color: goldenrod;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.playingScreen {
+  .scoreBoard::after {
+    display: block;
+    content: "Score: " counter(score);
+  }
+  .level {
+    counter-reset: score;
+  }
+  .hitbox {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    height: @hitbox-size;
+    width: @hitbox-size;
+    background-color: red;
+    position: absolute;
+    outline: 1px solid;
+
+    &:checked {
+      background-color: purple;
+      counter-increment: score;
+      pointer-events: none;
+    }
+  }
+}
+
+
+.clickGuard {
+  background-color: transparent;
+  position: absolute;
+  height: calc(@game-height - @hitbox-size);
+  width: 100%;
+  z-index: 100;
+}
+
+
+.col1 {
+  left: 30px;
+}
+.col2 {
+  left: 90px;
+}
+.col3 {
+  left: 150px;
+}
+.col4 {
+  left: 210px;
+}
+
+.hitboxIndicator {
+  height: @hitbox-size;
+  width: @hitbox-size;
+
+  position: absolute;
+  outline: 1px solid;
+  bottom: 5px;
+  pointer-events: none;
+}
+
+.level {
+  // transform: translateY(200px)
+}
+
+@keyframes playing {
+  0%   { transform: translateY(-100px); }
+  100% { transform: translateY(9000px); }
+}
