@@ -14,7 +14,7 @@ function createLevel(numElements = 40) {
   for (let i=0; i < numElements; i++) {
     const colNum = randBetween(1,4);
     curOffset += randBetween(1,5) * 50;
-    curDomStr += `<input type="checkbox" class="hitbox col${colNum}" style="top: -${curOffset}px"></input>`;
+    curDomStr += `<input type="checkbox" name="box${i}" class="hitbox col${colNum}" style="top: -${curOffset}px"></input>`;
   }
   return curDomStr;
 }
@@ -36,33 +36,34 @@ const htmlTemplate = `
     <h1>CSS Rhythm Game</h1>
     <p>This game is built entirely out of HTML and CSS, no JavaScript™ at all!</p>
     <br><br>
-    <input type="radio" name="game-state" id="start" checked>
-    <input type="radio" name="game-state" id="playing">
-    <input type="radio" name="game-state" id="gameOver">
-    <div id="game">
-      <div class="startScreen">
-        <label for="playing" class="playButton">Click here to play!</label>
-      </div>
-      <div class="playingScreen">
-        <div class="clickGuard"></div>
-        <div class="level">
-          ${level}
+    <form onSubmit="voi">
+      <input type="radio" name="game-state" id="start" checked>
+      <input type="radio" name="game-state" id="playing">
+      <input type="radio" name="game-state" id="gameOver">
+      <div id="game">
+        <div class="startScreen">
+          <label for="playing" class="playButton">Click here to play!</label>
         </div>
-        <div class="hitboxIndicator col1"></div>
-        <div class="hitboxIndicator col2"></div>
-        <div class="hitboxIndicator col3"></div>
-        <div class="hitboxIndicator col4"></div>
-        <div class="scoreBoard"></div>
+        <div class="playingScreen">
+          <div class="clickGuard"></div>
+          <div class="level">
+            ${level}
+          </div>
+          <div class="hitboxIndicator col1"></div>
+          <div class="hitboxIndicator col2"></div>
+          <div class="hitboxIndicator col3"></div>
+          <div class="hitboxIndicator col4"></div>
+          <div class="scoreBoard"></div>
+        </div>
+        <div class="gameOverScreen">
+          <label for="playing" class="playButton">Click here to play again!</label>
+        </div>
       </div>
-      <div class="gameOverScreen">
-        <label for="playing" class="playButton">Click here to play again!</label>
-      </div>
-    </div>
-    States here
-    <label for="start" id="resetButton">Reset</label>
-    <p>Check out <a href="https://github.com/lukebatchelor/css-tic-tac-toe">lukebatchelor/css-tic-tac-toe</a> if you're interested in how it works!</p>
+      <input type="reset" id="resetButton"></input>
+    </form>
+    <p>Check out <a href="https://github.com/lukebatchelor/css-rhythm-game">lukebatchelor/css-rhythm-game</a> if you're interested in how it works!</p>
   </div>
-  <a href="https://github.com/lukebatchelor/css-tic-tac-toe"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+  <a href="https://github.com/lukebatchelor/css-rhythm-game"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
   </body>
   </html>
 `;
