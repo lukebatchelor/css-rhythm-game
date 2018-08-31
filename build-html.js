@@ -38,11 +38,14 @@ const htmlTemplate = `
     <br><br>
     <form onSubmit="voi">
       <input type="radio" name="game-state" id="start" checked>
-      <input type="radio" name="game-state" id="playing">
-      <input type="radio" name="game-state" id="gameOver">
+      <input type="radio" name="game-state" id="playing-easy">
+      <input type="radio" name="game-state" id="playing-med">
+      <input type="radio" name="game-state" id="playing-hard">
       <div id="game">
         <div class="startScreen">
-          <label for="playing" class="playButton">Click here to play!</label>
+          <label for="playing-easy" class="playButton">Easy</label>
+          <label for="playing-med" class="playButton">Medium</label>
+          <label for="playing-hard" class="playButton">Hard!</label>
         </div>
         <div class="playingScreen">
           <div class="clickGuard"></div>
@@ -56,7 +59,7 @@ const htmlTemplate = `
           <div class="scoreBoard"></div>
         </div>
         <div class="gameOverScreen">
-          <label for="playing" class="playButton">Click here to play again!</label>
+          <label for="start" class="playButton">Play again!</label>
         </div>
       </div>
       <input type="reset" id="resetButton"></input>

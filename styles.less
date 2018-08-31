@@ -1,8 +1,12 @@
 @hitbox-size: 50px;
 @game-height: 400px;
+@game-length-easy: 35s;
+@game-length-med: 30s;
+@game-length-hard: 25s;
 
 body, html {
   height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .app {
@@ -25,19 +29,41 @@ body, html {
 .startScreen, .playingScreen, .gameOverScreen {
   display: none;
 }
+.gameOverScreen {
+  pointer-events: none;
+}
 
-#start:checked ~ #game .startScreen,
-#gameOver:checked ~ #game .gameOverScreen {
+#start:checked ~ #game .startScreen {
   display: flex;
 }
-#playing:checked ~ #game .playingScreen
-{
-  display: block;
+// #playing:checked ~ #game .playingScreen
+#playing-hard:checked {
+  .playingMixin(@game-length-hard)
+}
+#playing-med:checked {
+  .playingMixin(@game-length-med)
+}
+#playing-easy:checked {
+  .playingMixin(@game-length-easy)
+}
 
-  .level {
-    animation: playing 35s linear;
+.playingMixin(@game-length) {
+  ~ #game .gameOverScreen {
+    display: flex;
+    opacity: 0;
+    animation: show 0.1s linear @game-length forwards;
+  }
+  ~ #game .playingScreen {
+    display: block;
+    // wait @game-length time before playing the hide animation
+    animation: hide 0.1s linear @game-length forwards;
+
+    .level {
+      animation: playing @game-length linear;
+    }
   }
 }
+
 
 #game {
   border: 1px solid black;
@@ -111,6 +137,19 @@ body, html {
   pointer-events: none;
 }
 
+.playButton {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  width: 60px;
+  text-align: center;
+  pointer-events: all;
+
+  &:hover {
+    animation: menuHover 0.3s forwards;
+  }
+}
 @keyframes playing {
   0%   { transform: translateY(-100px); }
   100% { transform: translateY(9000px); }
@@ -119,4 +158,19 @@ body, html {
 @keyframes hitAnim {
   0% { transform: translateY(0) scale(1); opacity: 1; }
   100% { transform: translateY(-100px) scale(2); opacity: 0.3; }
+}
+
+@keyframes hide {
+  0% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+
+@keyframes show {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes menuHover {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.25); }
 }
