@@ -128,6 +128,21 @@ the whole form the game is inside of and returning us to the first menu.
 </div>
 ```
 
+Finally, the `maxStreak` feature is done very hackily. There's no way we can use counters to solve this problem
+without the ability to "reset" them back to a specific value.
+
+The trick to this ended up being generating `60` CSS rules that cover every possible `maxStreak` you can get!
+
+```less
+.maxStreakBoard::after {content: "Max streak: 0x";}
+.hitbox:checked ~ .maxStreakBoard::after {content: "Max streak: 1x";}
+.hitbox:checked + .hitbox:checked ~ .maxStreakBoard::after {content: "Max streak: 2x";}
+// ...
+```
+
+The really cool part about this is it doesn't interfere with the current counters and because each rule gets more and more specific, they automatically trump eachother correctly!
+
+
 ## Future ideas
 
 
@@ -143,35 +158,16 @@ The game currently generates `400` notes in the level, most of which wont ever b
 
 This would give us a smaller page load, or give us more data we can use for the optimization above!
 
+> This is partially completed now, but could be cleaned up
+
 **Perspective shift**
 
 I played with the idea of doing a Guitar Hero style perspective shift so that the notes appear to be coming out of a vanishing point as they come towards you. I ran into some issues with it, but this should 100% be achievable.
 
-**Highscore/MaxStreak**
+**High Score**
 
-I'd love to find a way to be able to store some sort of "Highscore" (in one session) or "Max Streak" (in one game).
+We can apply the same process and `maxStreak` to `highScore`.
 
-I have tried a few ways of achieving maxStreak using counters, and I don't think it's going to be viable.
+With this change, we'd probably also want to clean up how those elements are shown and hidden.
 
-A better solution would be if we could do something like:
-
-```less
-// Simplfied obviously
-.hitbox:not(:checked) + .hitbox:checked ~ .streakBoard::after {
-  display: block;
-  content: "Max streak: 1x";
-}
-.hitbox:not(:checked) + .hitbox:checked + .hitbox:checked ~ .streakBoard::after {
-  display: block;
-  content: "Max streak: 2x";
-}
-.hitbox:not(:checked) + .hitbox:checked + .hitbox:checked + .hitbox:checked ~ .streakBoard::after {
-  display: block;
-  content: "Max streak: 3x";
-}
-// ... ...
-```
-
-The rules get more and more specific as you go, so they would trump each time.
-
-The hard part here is getting a sibling element we can target that is going to not be moved by the transforming... A hacky solution might be to reverse the animation happening to the level, on the `streakBoard`.
+It's very hacky right now.

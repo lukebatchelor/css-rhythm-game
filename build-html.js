@@ -11,13 +11,15 @@ function randBetween(min, max) {
 function createLevel(numElements = 40) {
   let curOffset = 0;
   let curDomStr = '\n';
-  for (let i=0; i < numElements; i++) {
+  while (curOffset < 9000) {
     const colNum = randBetween(1,4);
     curOffset += randBetween(1,5) * 50;
     curDomStr += `<input type="checkbox" class="hitbox col${colNum}" style="top: -${curOffset}px"></input>\n`;
   }
   return curDomStr;
 }
+
+console.log('Generating random level...');
 
 const level = createLevel(400);
 
@@ -29,7 +31,8 @@ const htmlTemplate = `
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CSS Rhythm Game</title>
-    <link href="../styles.css" rel="stylesheet"></head>
+    <link href="./styles.css" rel="stylesheet"></head>
+    <link href="./max-streak-rules.css" rel="stylesheet"></head>
   </head>
   <body>
   <div class="app">
@@ -53,6 +56,7 @@ const htmlTemplate = `
           <div class="clickGuard"></div>
           <div class="level">
             ${level}
+            <div class="maxStreakBoard"></div>
           </div>
           <div class="hitboxIndicator col1"></div>
           <div class="hitboxIndicator col2"></div>
@@ -76,7 +80,7 @@ const htmlTemplate = `
   </html>
 `;
 console.log('Done!');
-console.log('Writing to', outputPath);
+console.log('Writing to', outputPath, `(${htmlTemplate.length/1000}Kb)`);
 
 fs.writeFileSync(outputPath, htmlTemplate);
 console.log('Done!');

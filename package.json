@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "yarn nodemon -e js,css --watch build-html.js --watch styles.less --exec \"yarn build && yarn serve\"",
-    "build": "mkdir -p dist && node build-html.js && lessc styles.less dist/styles.css",
+    "build": "mkdir -p dist && node build-html.js && lessc styles.less dist/styles.css && node build-max-streak-rules.js",
     "serve": "http-server -c-1 dist/"
   },
   "keywords": [],

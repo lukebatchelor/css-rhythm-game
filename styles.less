@@ -2,7 +2,7 @@
 @game-height: 400px;
 @game-length-easy: 45s;
 @game-length-med: 30s;
-@game-length-hard: 25s;
+@game-length-hard: 20s;
 
 body, html {
   height: 100%;
@@ -10,6 +10,12 @@ body, html {
 }
 * {
   box-sizing: border-box;
+}
+
+.maxStreakBoard {
+  position: absolute;
+  top: 240px;
+  right: 95px;
 }
 
 .app {
@@ -80,6 +86,10 @@ input[type="radio"] {
 
     .level {
       animation: playing @game-length linear;
+    }
+
+    .maxStreakBoard {
+      animation: hide 0.1s linear @game-length reverse both;
     }
   }
 }
@@ -206,14 +216,16 @@ input[type="radio"] {
   100% { transform: translateY(9000px); }
 }
 
+
 @keyframes hitAnim {
   0% { transform: translateY(0) scale(1); opacity: 1; }
   100% { transform: translateY(-100px) scale(2); opacity: 0.3; }
 }
 
 @keyframes hide {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% { color: rgba(0, 0, 0, 1) }
+  // Very hacky, but this lets us click through the clickGuard when gameOver
+  100% { color: rgba(0, 0, 0, 0); pointer-events: none; }
 }
 
 @keyframes show {
