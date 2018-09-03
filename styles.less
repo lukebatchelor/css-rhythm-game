@@ -1,12 +1,15 @@
 @hitbox-size: 50px;
 @game-height: 400px;
-@game-length-easy: 35s;
+@game-length-easy: 45s;
 @game-length-med: 30s;
 @game-length-hard: 25s;
 
 body, html {
   height: 100%;
   font-family: Arial, Helvetica, sans-serif;
+}
+* {
+  box-sizing: border-box;
 }
 
 .app {
@@ -26,13 +29,30 @@ body, html {
   width: 100%;
 }
 
+input[type="reset"] {
+  background: none;
+  color: inherit;
+  width: initial;
+  // We explicitly do not touch border and padding to make it easier to override them
+  // border: none;
+  // padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+input[type="radio"] {
+  display: none;
+}
+
 .startScreen, .playingScreen, .gameOverScreen {
   display: none;
 }
 .gameOverScreen {
   pointer-events: none;
 }
-
+.startScreen {
+  padding: 10px;
+}
 #start:checked ~ #game .startScreen {
   display: flex;
 }
@@ -73,14 +93,23 @@ body, html {
   border-radius: 4px;
   position: relative;
   overflow: hidden;
+  counter-reset: score streak;
 }
+
 .playingScreen {
   .scoreBoard::after {
     display: block;
     content: "Score: " counter(score);
+    position: absolute;
+    top: 10px;
+    left: 10px;
   }
-  .level {
-    counter-reset: score;
+  .streakBoard::after {
+    display: block;
+    content: "Streak: " counter(streak) "x";
+    position: absolute;
+    top: 10px;
+    right: 30px;
   }
   .hitbox {
     -moz-appearance: none;
@@ -104,6 +133,28 @@ body, html {
   }
 }
 
+.level .hitbox:first-of-type:checked,
+.hitbox:not(:checked) + .hitbox:checked {
+  counter-reset: streak;
+  counter-increment: score streak;
+}
+.hitbox:checked + .hitbox:checked {
+  counter-increment: score streak;
+}
+
+
+.gameOverScreen {
+  #game-over-score::after {
+    display: block;
+    content: "Score: " counter(score);
+  }
+  #game-over-streak::after {
+    display: block;
+    content: "Final Streak: " counter(streak) "x";
+    margin-top: -5px;
+    margin-bottom: 40px;
+  }
+}
 
 .clickGuard {
   background-color: transparent;
@@ -142,7 +193,7 @@ body, html {
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 10px;
-  width: 60px;
+  width: 80px;
   text-align: center;
   pointer-events: all;
 
@@ -162,7 +213,7 @@ body, html {
 
 @keyframes hide {
   0% { opacity: 1; }
-  100% { opacity: 0; display: none; }
+  100% { opacity: 0; }
 }
 
 @keyframes show {

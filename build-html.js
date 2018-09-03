@@ -43,6 +43,8 @@ const htmlTemplate = `
       <input type="radio" name="game-state" id="playing-hard">
       <div id="game">
         <div class="startScreen">
+          <h2>Rhythm Game!</h2>
+          <p>Hit as many notes as you can, but only whilst they are in the strike zone!</p>
           <label for="playing-easy" class="playButton">Easy</label>
           <label for="playing-med" class="playButton">Medium</label>
           <label for="playing-hard" class="playButton">Hard!</label>
@@ -57,12 +59,15 @@ const htmlTemplate = `
           <div class="hitboxIndicator col3"></div>
           <div class="hitboxIndicator col4"></div>
           <div class="scoreBoard"></div>
+          <div class="streakBoard"></div>
         </div>
         <div class="gameOverScreen">
-          <label for="start" class="playButton">Play again!</label>
+          <h2>Game Over!</h2>
+          <p id="game-over-score"></p>
+          <p id="game-over-streak"></p>
+          <input type="reset" id="resetButton" class="playButton" value="Play Again!"></input>
         </div>
       </div>
-      <input type="reset" id="resetButton"></input>
     </form>
     <p>Check out <a href="https://github.com/lukebatchelor/css-rhythm-game">lukebatchelor/css-rhythm-game</a> if you're interested in how it works!</p>
   </div>
