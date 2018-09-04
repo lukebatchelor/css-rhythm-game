@@ -99,11 +99,11 @@ input[type="radio"] {
 }
 
 
-#debug:target ~ [name="game-state-level"]{
+#debug:target ~ input[type="radio"]{
   display: block;
 
   &::after {
-    content: attr(name) " " attr(id);
+    content: attr(name) " | " attr(id);
     display: inline-block;
     width: 150px;
   }

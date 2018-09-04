@@ -123,10 +123,10 @@ Scores and streaks are implemented using [CSS counters](https://developer.mozill
 
 ### Randomness of the notes
 
-The set of notes you'll see when playing is completely random every time the site is built and deployed, but from then on is static.
+The set of notes you'll see when playing is generated random every time the site is built and deployed, but from then on is static.
 
 We still manage to make the game feel random by doing a little trick on the first screen. What looks like 1 `Play!` button, is actually
-4 play buttons stacked on top of each other with an animation that makes them invisible at different times to eachother.
+4 play buttons stacked on top of each other with an animation that makes them invisible at different times to each other.
 
 ```html
 <div class="levelSelectButtons">
@@ -137,7 +137,7 @@ We still manage to make the game feel random by doing a little trick on the firs
 </div>
 ```
 
-The first one is always visible, the others are set to loop animations, but out of sync with eachother
+The first one is always visible, the others are set to loop animations, but out of sync with each other
 
 ```less
 .levelSelectButtons .playButton {
@@ -170,7 +170,7 @@ The first one is always visible, the others are set to loop animations, but out 
 ```
 
 Each of those buttons are labels for more radio buttons that control which level to display. A `hitBox` will always have a
-class of `level1`,`level2`,`level3` or `level4`, so each one of the radios makes 1/4 of the notes visible.
+class of `level1`, `level2`, `level3` or `level4`, so each one of the radios makes 1/4 of the notes visible.
 
 ```less
 #level-1:checked ~ #game .level1 { display: initial; }
@@ -229,7 +229,7 @@ The trick to this ended up being generating `60` CSS rules that cover every poss
 // ...
 ```
 
-The really cool part about this is it doesn't interfere with the current counters and because each rule gets more and more specific, they automatically trump eachother correctly!
+The really cool part about this is it doesn't interfere with the current counters and because each rule gets more and more specific, they automatically trump each other correctly!
 
 
 ## Future ideas
@@ -241,3 +241,10 @@ I played with the idea of doing a Guitar Hero style perspective shift so that th
 **High Score**
 
 *Some* way of storing the high score between games. So far I have no ideas. We can't use counters and we can't use the same trick as maxStreak without some sort of extra logic for knowing which game's score to show. Even then it would mean refactoring how random games and resetting works...
+
+**Theme Picker**
+
+I don't think this is the most *useful* feature, but it's one more interesting thing that could be tacked on quite easily.
+
+We can display an "Options" button on the first screen that is a link to `#options`. We can use the `:target` pseudo selector to then
+show a screen that lets the user pick between different background patterns for the game and a button to go back to the main screen.
