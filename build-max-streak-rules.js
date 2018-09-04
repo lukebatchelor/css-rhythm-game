@@ -13,7 +13,8 @@ for (let i =0; i < MAX_STREAK; i++) {
   maxStreakRules += `.hitbox:checked ${'+ .hitbox:checked '.repeat(i)}~ .maxStreakBoard::after {content: "Max streak: ${i + 1}x";}\n`
 }
 
+console.log('Writing to', outputPath, `(${maxStreakRules.length/1000}Kb)`);
+
 fs.writeFileSync(outputPath, maxStreakRules);
 
-console.log('Done');
-console.log(`${maxStreakRules.length/1000} Kb`);
+console.log('Done!');

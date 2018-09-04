@@ -8,20 +8,18 @@ function randBetween(min, max) {
   return Math.floor(Math.random() * (max - min +1)) + min;
 }
 
-function createLevel(numElements = 40) {
+function createLevel(levelNum) {
   let curOffset = 0;
   let curDomStr = '\n';
   while (curOffset < 9000) {
     const colNum = randBetween(1,4);
     curOffset += randBetween(1,5) * 50;
-    curDomStr += `<input type="checkbox" class="hitbox col${colNum}" style="top: -${curOffset}px"></input>\n`;
+    curDomStr += `<input type="checkbox" class="hitbox col${colNum} level${levelNum}" style="top: -${curOffset}px"></input>\n`;
   }
   return curDomStr;
 }
 
 console.log('Generating random level...');
-
-const level = createLevel(400);
 
 const htmlTemplate = `
   <!DOCTYPE html>
@@ -44,18 +42,33 @@ const htmlTemplate = `
       <input type="radio" name="game-state" id="playing-easy">
       <input type="radio" name="game-state" id="playing-med">
       <input type="radio" name="game-state" id="playing-hard">
+      <input type="radio" name="game-state-level" id="level-1">
+      <input type="radio" name="game-state-level" id="level-2">
+      <input type="radio" name="game-state-level" id="level-3">
+      <input type="radio" name="game-state-level" id="level-4">
       <div id="game">
         <div class="startScreen">
           <h2>Rhythm Game!</h2>
           <p>Hit as many notes as you can, but only whilst they are in the strike zone!</p>
-          <label for="playing-easy" class="playButton">Easy</label>
-          <label for="playing-med" class="playButton">Medium</label>
-          <label for="playing-hard" class="playButton">Hard!</label>
+          <div class="levelSelectButtons">
+            <label for="level-1" class="playButton b1">Play!</label>
+            <label for="level-2" class="playButton b2">&nbsp;</label>
+            <label for="level-3" class="playButton b3">&nbsp;</label>
+            <label for="level-4" class="playButton b4">&nbsp;</label>
+          </div>
+          <div class="difficultySelectButtons">
+            <label for="playing-easy" class="playButton">Easy</label>
+            <label for="playing-med" class="playButton">Medium</label>
+            <label for="playing-hard" class="playButton">Hard!</label>
+          </div>
         </div>
         <div class="playingScreen">
           <div class="clickGuard"></div>
           <div class="level">
-            ${level}
+            ${createLevel(1)}
+            ${createLevel(2)}
+            ${createLevel(3)}
+            ${createLevel(4)}
             <div class="maxStreakBoard"></div>
           </div>
           <div class="hitboxIndicator col1"></div>
