@@ -14,6 +14,8 @@ It's a fun experiment, trying to build features into something when you have a t
 
 This experiment is actually very simple, even compared to some of my older ones.
 
+### Game menus
+
 The menus work similarly to [CSS](https://github.com/lukebatchelor/css-tic-tac-toe) and [Binary Decoder](https://github.com/lukebatchelor/css-binary-decoder) experiments. There are a set of radio buttons representing the current "state".
 
 ```html
@@ -45,10 +47,12 @@ Only one can be selected at a time, and we use these to decide which screen to s
 }
 ```
 
-The playing screens are also simple. We have a `clickGuard` class that sits over the
-top of everything and prevents clicks from reaching the `hitBoxes`. 
+### The game loop
 
-Then a `level` which we apply the playing animation, simply translating itself downwards over a 
+The playing screens are also simple. We have a `clickGuard` class that sits over the
+top of everything and prevents clicks from reaching the `hitBoxes`.
+
+Then a `level` which we apply the playing animation, simply translating itself downwards over a
 pre-determined amount of time.
 
 Inside `level` is a series of `hitoxes` (styled checkboxes) that are generated at random top offsets.
@@ -73,6 +77,8 @@ Inside `level` is a series of `hitoxes` (styled checkboxes) that are generated a
 
 At the bottom you'll see the  `hitboxIndicator`s, `scoreBoard` and `streakBoard`. They
 are the static parts of the game for showing where you can click, and for displaying score/streaks.
+
+### Keeping track of the score and streaks
 
 Scores and streaks are implemented using [CSS counters](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters). The logic for these is below.
 
@@ -115,6 +121,85 @@ Scores and streaks are implemented using [CSS counters](https://developer.mozill
 }
 ```
 
+### Randomness of the notes
+
+The set of notes you'll see when playing is completely random every time the site is built and deployed, but from then on is static.
+
+We still manage to make the game feel random by doing a little trick on the first screen. What looks like 1 `Play!` button, is actually
+4 play buttons stacked on top of each other with an animation that makes them invisible at different times to eachother.
+
+```html
+<div class="levelSelectButtons">
+  <label for="level-1" class="playButton b1">Play!</label>
+  <label for="level-2" class="playButton b2">&nbsp;</label>
+  <label for="level-3" class="playButton b3">&nbsp;</label>
+  <label for="level-4" class="playButton b4">&nbsp;</label>
+</div>
+```
+
+The first one is always visible, the others are set to loop animations, but out of sync with eachother
+
+```less
+.levelSelectButtons .playButton {
+  margin-left: -80px;
+  width: 80px;
+  position: absolute;
+  left: 190px;
+}
+
+// We debliberately don't animate the "bottom" button so that it is always visible underneath
+// to prevent any flashing of text
+// .levelSelectButtons .playButton[for="level-1"] {
+//     animation: toggleVisible 2s steps(1, end) 0.5s infinite;
+// }
+.levelSelectButtons .playButton[for="level-2"] {
+  animation: toggleVisible 2s steps(1, end) 0.5s infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+.levelSelectButtons .playButton[for="level-3"] {
+  animation: toggleVisible 2s steps(1, end) 1s infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+.levelSelectButtons .playButton[for="level-4"] {
+  animation: toggleVisible 2s steps(1, end) 1.5s infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+```
+
+Each of those buttons are labels for more radio buttons that control which level to display. A `hitBox` will always have a
+class of `level1`,`level2`,`level3` or `level4`, so each one of the radios makes 1/4 of the notes visible.
+
+```less
+#level-1:checked ~ #game .level1 { display: initial; }
+#level-2:checked ~ #game .level2 { display: initial; }
+#level-3:checked ~ #game .level3 { display: initial; }
+#level-4:checked ~ #game .level4 { display: initial; }
+```
+
+If you want to see this trick in action, try adding [#debug](https://css-ddr.netlify.com/#debug) to the end of the url!
+
+### Debug screen
+
+This is a pretty simple one, but is useful for showing how the game works! We simply have an element with an `id` of `debug` and we can
+select that with the `:target` pseudo-selector
+
+```less
+#debug:target ~ [name="game-state-level"]{
+  display: block;
+
+  &::after {
+    content: attr(name) " " attr(id);
+    display: inline-block;
+    width: 150px;
+  }
+}
+```
+
+### Game over screen
+
 Similar to all the above, the `gameOverScreen` has elements we can select to
 write our counters to, and a reset button to restart the game. This works by clearing
 the whole form the game is inside of and returning us to the first menu.
@@ -127,6 +212,10 @@ the whole form the game is inside of and returning us to the first menu.
   <input type="reset" id="resetButton" class="playButton" value="Play Again!"></input>
 </div>
 ```
+
+We use a couple of animations to switch between the `gameScreen` and the `gameOverScreen` but they're super messy at the moment.
+
+### Storing Max Streaks
 
 Finally, the `maxStreak` feature is done very hackily. There's no way we can use counters to solve this problem
 without the ability to "reset" them back to a specific value.
@@ -145,29 +234,10 @@ The really cool part about this is it doesn't interfere with the current counter
 
 ## Future ideas
 
-
-**Randomisation**
-
-Currently the order of the notes is randomised every time we rebuild/deploy but this isn't fun if
-you're playing a bunch of times. It should be pretty easy to trick the user into thinking the game is random
-by having the `startScreen` actually be constantly animating between `X` different start screens that take you to `X` different generated levels. With a high enough `X`, this will likely be indistinguishable from random.
-
-**Optimization**
-
-The game currently generates `400` notes in the level, most of which wont ever be reachable. We could fiddle with these numbers, finding the maximum number we need to be able to display for a random game of `Y` seconds.
-
-This would give us a smaller page load, or give us more data we can use for the optimization above!
-
-> This is partially completed now, but could be cleaned up
-
 **Perspective shift**
 
 I played with the idea of doing a Guitar Hero style perspective shift so that the notes appear to be coming out of a vanishing point as they come towards you. I ran into some issues with it, but this should 100% be achievable.
 
 **High Score**
 
-We can apply the same process and `maxStreak` to `highScore`.
-
-With this change, we'd probably also want to clean up how those elements are shown and hidden.
-
-It's very hacky right now.
+*Some* way of storing the high score between games. So far I have no ideas. We can't use counters and we can't use the same trick as maxStreak without some sort of extra logic for knowing which game's score to show. Even then it would mean refactoring how random games and resetting works...
