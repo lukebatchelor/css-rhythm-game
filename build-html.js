@@ -38,6 +38,7 @@ const htmlTemplate = `
     <p>This game is built entirely out of HTML and CSS, no JavaScript™ at all!</p>
     <br><br>
     <form onSubmit="voi">
+      <input type="radio" name="debug" id="debug">
       <input type="radio" name="game-state" id="start" checked>
       <input type="radio" name="game-state" id="playing-easy">
       <input type="radio" name="game-state" id="playing-med">

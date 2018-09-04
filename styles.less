@@ -51,17 +51,17 @@ body, html {
 //   .toggleAnimationMixin(0s);
 // }
 .levelSelectButtons .playButton[for="level-2"] {
-  animation: toggle 2s steps(1, end) 0.5s infinite;
+  animation: toggleVisible 2s steps(1, end) 0.5s infinite;
   opacity: 0;
   pointer-events: none;
 }
 .levelSelectButtons .playButton[for="level-3"] {
-  animation: toggle 2s steps(1, end) 1s infinite;
+  animation: toggleVisible 2s steps(1, end) 1s infinite;
   opacity: 0;
   pointer-events: none;
 }
 .levelSelectButtons .playButton[for="level-4"] {
-  animation: toggle 2s steps(1, end) 1.5s infinite;
+  animation: toggleVisible 2s steps(1, end) 1.5s infinite;
   opacity: 0;
   pointer-events: none;
 }
@@ -96,6 +96,17 @@ input[type="reset"] {
 }
 input[type="radio"] {
   display: none;
+}
+
+
+#debug:target ~ [name="game-state-level"]{
+  display: block;
+
+  &::after {
+    content: attr(name) " " attr(id);
+    display: inline-block;
+    width: 150px;
+  }
 }
 
 .startScreen, .playingScreen, .gameOverScreen {
@@ -301,7 +312,7 @@ input[type="radio"] {
   100% { transform: scale(1.25); }
 }
 
-@keyframes toggle {
+@keyframes toggleVisible {
   0% { opacity: 1; pointer-events: initial; }
   33% { opacity: 0; pointer-events: none; }
   66% { opacity: 0; pointer-events: none; }
