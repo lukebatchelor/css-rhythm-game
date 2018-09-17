@@ -248,3 +248,8 @@ I don't think this is the most *useful* feature, but it's one more interesting t
 
 We can display an "Options" button on the first screen that is a link to `#options`. We can use the `:target` pseudo selector to then
 show a screen that lets the user pick between different background patterns for the game and a button to go back to the main screen.
+
+## Thanks
+
+* [github-corners](https://github.com/tholman/github-corners) by tholman used under [MIT](https://github.com/tholman/github-corners/blob/master/license.md) license
+* [material-design-icons](https://github.com/google/material-design-icons) by Google used under [Apache](https://github.com/google/material-design-icons/blob/master/LICENSE) license
