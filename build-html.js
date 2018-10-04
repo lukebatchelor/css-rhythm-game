@@ -70,18 +70,18 @@ const htmlTemplate = `
             ${createLevel(3)}
             ${createLevel(4)}
             <div class="maxStreakBoard"></div>
+            <div class="streakBoard"></div>
           </div>
           <div class="hitboxIndicator col1"></div>
           <div class="hitboxIndicator col2"></div>
           <div class="hitboxIndicator col3"></div>
           <div class="hitboxIndicator col4"></div>
           <div class="scoreBoard"></div>
-          <div class="streakBoard"></div>
         </div>
         <div class="gameOverScreen">
           <h2>Game Over!</h2>
           <p id="game-over-score"></p>
-          <p id="game-over-streak"></p>
+          <br><br>
           <input type="reset" id="resetButton" class="playButton" value="Play Again!"></input>
         </div>
       </div>

@@ -15,7 +15,7 @@ body, html {
 
 .maxStreakBoard {
   position: absolute;
-  top: 240px;
+  top: 225px;
   right: 95px;
 }
 
@@ -95,6 +95,7 @@ input[type="reset"] {
   font: inherit;
   cursor: pointer;
   outline: inherit;
+  margin-top: 30px;
 }
 input[type="radio"] {
   display: none;
@@ -155,11 +156,11 @@ input[type="radio"] {
     // wait @game-length time before playing the hide animation
     animation: hide 0.1s linear @game-length forwards;
 
-    .level {
+    .level .hitbox {
       animation: playing @game-length linear;
     }
 
-    .maxStreakBoard {
+    .maxStreakBoard  {
       animation: hide 0.1s linear @game-length reverse both;
     }
   }
@@ -210,7 +211,7 @@ input[type="radio"] {
     &:checked {
       counter-increment: score;
       pointer-events: none;
-      animation: hitAnim 0.3s;
+      animation: hitAnim 0.3s !important;
     }
   }
 }
@@ -220,7 +221,10 @@ input[type="radio"] {
 #level-3:checked ~ #game .level3 { display: initial; }
 #level-4:checked ~ #game .level4 { display: initial; }
 
-.level .hitbox:first-of-type:checked,
+.level1 .hitbox:first-of-type:checked,
+.level2 .hitbox:first-of-type:checked,
+.level3 .hitbox:first-of-type:checked,
+.level4 .hitbox:first-of-type:checked,
 .hitbox:not(:checked) + .hitbox:checked {
   counter-reset: streak;
   counter-increment: score streak;
@@ -229,17 +233,10 @@ input[type="radio"] {
   counter-increment: score streak;
 }
 
-
 .gameOverScreen {
   #game-over-score::after {
     display: block;
     content: "Score: " counter(score);
-  }
-  #game-over-streak::after {
-    display: block;
-    content: "Final Streak: " counter(streak) "x";
-    margin-top: -5px;
-    margin-bottom: 40px;
   }
 }
 
