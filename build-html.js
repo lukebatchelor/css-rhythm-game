@@ -33,6 +33,11 @@ const htmlTemplate = `
     <link href="./max-streak-rules.css" rel="stylesheet"></head>
   </head>
   <body>
+  <div class="warningBanner">
+    This page is best viewed on mobile or with dev tools open (and mobile emulation turned on)<br>
+    This is because click events on moving targets are treated very different to touch events, and make the game unplayable. <br>
+    Enjoy!
+  </div>
   <div class="app">
     <h1>CSS Rhythm Game</h1>
     <p>This game is built entirely out of HTML and CSS, no JavaScript™ at all!</p>

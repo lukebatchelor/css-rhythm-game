@@ -4,6 +4,8 @@ A super simple "rhythm" game (with no sound) built entirely out of HTML and CSS 
 
 ![Example Gameplay](./gameplay.gif)
 
+> **Important note:** This game works best on mobiles or by having dev tools open with mobile emulation turned on. This is because click events on moving targets are treated very differently to touch events and make the game pretty much unplayable.
+
 ## Why?
 
 I've been building a series of these silly experiments to explore what is possible using only CSS on a page.

@@ -13,6 +13,19 @@ body, html {
   box-sizing: border-box;
 }
 
+.warningBanner {
+  background-color: red;
+  text-align: center;
+  padding: 15px;
+  height:80px;
+}
+
+@media only screen 
+  and (min-device-width : 320px) 
+  and (max-device-width : 480px){ 
+  .warningBanner { display: none;}
+}
+
 .maxStreakBoard {
   position: absolute;
   top: 225px;
